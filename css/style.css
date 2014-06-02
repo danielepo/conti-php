@@ -1,0 +1,106 @@
+body {
+    font-family: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;
+    margin: 0;
+    padding: 0;
+}
+#wrap {
+    margin: 0 auto;
+    width: 98%;
+}
+table {
+    border-collapse: collapse;
+}
+#nav {
+    border-bottom: 1px solid silver;
+    font-size: 1.6em;
+    list-style-type: none;
+    padding: 0 0 7px;
+    position: relative;
+}
+#nav li {
+    display: inline;
+    margin: 5px 10px;
+}
+#selMonth {
+    margin: 5px 0;
+}
+#selMonth button, #selMonth span.date {
+    margin: 5px 0;
+}
+#contenthead {
+    position: relative;
+    width: 100%;
+}
+#content {
+    font-size: 1.2em;
+    position: relative;
+    width: 100%;
+}
+#adder {
+    display: none;
+    padding: 10px 0;
+}
+#clear {
+    clear: both;
+}
+#ocdiv, #icdiv {
+}
+#icdiv {
+}
+#addrow input, #addrow textarea {
+    font-size: 1.9em;
+    margin: 6px 0 4px;
+}
+#cattext {
+    margin-top: 0;
+}
+#desctext {
+    margin-top: 45px;
+}
+#costtext {
+    margin: 43px 0 15px;
+}
+.addTable {
+    width: 98%;
+}
+.addTable .first {
+    width: 20%;
+}
+.addTable .second {
+    width: 80%;
+}
+.addTable td input {
+    font-size: 1.9em;
+    height: 1.9em;
+    width: 100%;
+}
+.addTable td textarea {
+    font-size: 1.9em;
+    height: 2.5em;
+    width: 100%;
+}
+.reporttable {
+    font-size: 1.2em;
+    margin-bottom: 50px;
+    width: 100%;
+}
+.reporttable thead td {
+    background-color: #4F81BD;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    color: #FFFFFF;
+}
+.reporttable tr.odd {
+    background-color: #D9D9D9;
+}
+.reporttable tr.even {
+    background-color: #FFFFFF;
+}
+.reporttable .rcost{
+	padding: 0 10px 0 0;
+}
+.reporttable .rcost span{
+	text-align: right;
+	display:block;
+	width:95%;
+}

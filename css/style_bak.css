@@ -1,0 +1,117 @@
+body{
+	margin:0;
+	padding:0;
+	font-family: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;
+}
+
+#wrap{
+	width: 98%; 
+	margin:0 auto;
+}
+
+table {border-collapse:collapse;}	
+#nav{
+	list-style-type:none;
+	border-bottom: 1px solid silver;
+    padding: 0 0 7px;
+	position:relative;
+	font-size:1.6em;
+}
+#nav li{
+	display: inline;
+	margin:5px 10px 5px 10px;
+}
+#selMonth{
+	margin:5px 0 5px 0;
+	}
+#selMonth button,#selMonth span.date{
+	margin:5px 0 5px 0;
+	}
+#contenthead{
+	width:100%;
+	position:relative;
+}
+#content{
+	width:100%;
+	position:relative;
+}
+#adder {
+	display:none;	
+	padding :10px 0 10px 0;
+} 
+#clear{clear:both;}
+
+#ocdiv,#icdiv{
+	position:absolute;
+	width:490px;
+}
+#icdiv{
+	left:535px;
+}
+#addrow input,#addrow textarea{
+	
+	/*left:100px;*/
+	font-size: 1.9em;
+	margin: 6px 0 4px;
+	}	
+	#cattext{
+		margin-top:0;
+		}
+	/*#cat{
+		top: 15px;
+		}
+	#subcat{
+		top: 40px;
+		}*/
+	#desctext{
+		margin-top:45px;
+		}/*
+	#desc{
+		top: 66px;
+		}*/
+	#costtext{
+		margin: 43px 0 15px;
+		}/*
+	#cost{
+		top: 125px;
+		}
+	#datepicker{
+		top: 150px;
+		} 	
+	#adderSubmit{
+		top: 176px;
+		}*/
+
+.addTable{
+	width:98%;
+	border-style:2px black;
+}	
+.addTable .first{
+	width:20%;
+}		
+.addTable .second{
+	width:80%;
+}		
+.addTable td input{
+	width:100%;
+	height:1.9em;
+	font-size: 1.9em;
+}	
+.addTable td textarea{
+	width:100%;
+	height:2.5em;
+	font-size: 1.9em;
+}	
+.reporttable{
+	width:100%;
+	margin-bottom: 50px;
+}	
+.reporttable thead td{
+	border-top:1px black solid;
+	border-bottom:1px black solid;
+	
+	background-color:#4f81bd;
+	color:#fff;
+}		
+.reporttable tr.odd{background-color:#d9d9d9}
+.reporttable tr.even{background-color:#fff}
