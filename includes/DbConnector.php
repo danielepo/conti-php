@@ -11,6 +11,8 @@ var $theQuery;
 var $link;
 var $error;
 
+protected $queryResult;
+
 //*** Function: DbConnector, Purpose: Connect to the database ***
 function DbConnector(){
 
@@ -31,14 +33,16 @@ function DbConnector(){
 }
 
 //*** Function: query, Purpose: Execute a database query ***
-public /*protected*/ function query($query) {
+public  function query($query) {
 	$this->theQuery = $query;
-	$ret = mysql_query($query, $this->link);
+	$this->queryResult = mysql_query($query, $this->link);
 	$this->error=mysql_error($this->link);
 	//echo $this->theQuery."<br>";
-	if($this->error!='')
-	 echo $this->error;
-	return $ret;
+	if ($this->error != '')
+    {
+      echo $this->error;
+    }
+    return $this->queryResult;
 }
 
 public function getError(){
@@ -51,19 +55,28 @@ function getQuery() {
 
 //*** Function: getNumRows, Purpose: Return row count, MySQL version ***
 function getNumRows($result){
-	return mysql_num_rows($result);
+	return mysql_num_rows($this->queryResult);
+}
+//*** Function: getNumRows, Purpose: Return row count, MySQL version ***
+function hasData($result){
+	return mysql_num_rows($this->queryResult) > 0;
 }
 
 //*** Function: fetchArray, Purpose: Get array of query results ***
 
 function fetchArray($result,$result_type = MYSQL_BOTH) {
-	if($result)
-		return mysql_fetch_array($result,$result_type );
-	else return -1;
-}
+   if ($result)
+    {
+      return mysql_fetch_array($this->queryResult, $result_type);
+    }
+    else
+    {
+      return -1;
+    }
+  }
 //*** Function: fetchArray, Purpose: Get array of query results ***
 function fetchRow($result) {
-	return mysql_fetch_row($result);
+	return mysql_fetch_row($this->queryResult);
 }
 //*** Function: close, Purpose: Close the connection ***
 function close() {
@@ -72,4 +85,3 @@ function close() {
 
 
 }
-?>

@@ -20,4 +20,3 @@ class SystemComponent
 		return $settings;
 	}
 }
-?>

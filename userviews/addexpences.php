@@ -1,12 +1,14 @@
 <?php 
 include_once '../includes/DbAccountManagement.php';
 
-if(isset($_POST['inputMethod']))
-	$inputMethod=$_POST['inputMethod'];
-else if(isset($_GET['inputMethod']))
-	$inputMethod=$_GET['inputMethod'];
+if (isset($_REQUEST['inputMethod']))
+{
+  $inputMethod = $_POST['inputMethod'];
+}
 else
-	$inputMethod="";
+{
+  $inputMethod = "";
+}
 
 if(isset($_POST['cat']) && isset($_POST['subcat']) && isset( $_POST['cost']) && isset($_POST['date']) && isset( $_POST['desc'])){
 
@@ -18,4 +20,3 @@ if(isset($_POST['cat']) && isset($_POST['subcat']) && isset( $_POST['cost']) && 
 	}
 		
 }
-?>
