@@ -10,7 +10,6 @@ class DbConnector extends SystemComponent {
 var $theQuery;
 var $link;
 var $error;
-
 protected $queryResult;
 
 //*** Function: DbConnector, Purpose: Connect to the database ***
@@ -24,10 +23,11 @@ function DbConnector(){
 	$db = $settings['dbname'];
 	$user = $settings['dbusername'];
 	$pass = $settings['dbpassword'];
-
+  
+  $this->link = mysqli_init();
 	// Connect to the database
-	$this->link = mysql_connect($host, $user, $pass);
-	mysql_select_db($db);
+	$this->link->real_connect($host, $user, $pass, $db, 3306);
+	
 	register_shutdown_function(array(&$this, 'close'));
 
 }
@@ -35,8 +35,8 @@ function DbConnector(){
 //*** Function: query, Purpose: Execute a database query ***
 public  function query($query) {
 	$this->theQuery = $query;
-	$this->queryResult = mysql_query($query, $this->link);
-	$this->error=mysql_error($this->link);
+	$this->queryResult = $this->link->query($query);
+	$this->error=$this->link->error;
 	//echo $this->theQuery."<br>";
 	if ($this->error != '')
     {
@@ -55,11 +55,11 @@ function getQuery() {
 
 //*** Function: getNumRows, Purpose: Return row count, MySQL version ***
 function getNumRows($result){
-	return mysql_num_rows($this->queryResult);
+	return $this->queryResult->num_rows;
 }
 //*** Function: getNumRows, Purpose: Return row count, MySQL version ***
 function hasData($result){
-	return mysql_num_rows($this->queryResult) > 0;
+	return $this->getNumRows(null) > 0;
 }
 
 //*** Function: fetchArray, Purpose: Get array of query results ***
@@ -67,7 +67,7 @@ function hasData($result){
 function fetchArray($result,$result_type = MYSQL_BOTH) {
    if ($result)
     {
-      return mysql_fetch_array($this->queryResult, $result_type);
+      return $this->queryResult->fetch_array($result_type);
     }
     else
     {
@@ -76,11 +76,12 @@ function fetchArray($result,$result_type = MYSQL_BOTH) {
   }
 //*** Function: fetchArray, Purpose: Get array of query results ***
 function fetchRow($result) {
-	return mysql_fetch_row($this->queryResult);
+	return $this->queryResult->fetch_row();
 }
 //*** Function: close, Purpose: Close the connection ***
 function close() {
-	mysql_close($this->link);
+	if(is_a($this->link, "mysqli"))
+  $this->link->close();
 }
 
 
