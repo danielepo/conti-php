@@ -1,5 +1,5 @@
 <?php
-require_once 'SystemComponent.php';
+//require_once 'SystemComponent.php';
 class Validator extends SystemComponent {
 
 	var $errors; // A variable to store a list of error messages
