@@ -8,7 +8,7 @@ class SystemComponent
 	function getSettings()
 	{
 		//System Variables
-		$settings['siteDir']='c:/VolumeD/www/test';
+		$settings['siteDir']='D:/www/conti/conti-php';
 		
 		// Database variables
 		$settings['dbhost'] = 'localhost';
