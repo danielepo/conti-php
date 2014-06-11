@@ -1,6 +1,19 @@
 <?php
+function __autoload($class)
+{
+  $filename = $class . '.php';
+  $includeFolder = '../includes/';
+  $templatesFolder = '../templates/';
+  if (file_exists($includeFolder . $filename))
+  {
+    require_once $includeFolder . $filename;
+  }
+  if (file_exists($templatesFolder . $filename))
+  {
+    require_once $templatesFolder . $filename;
+  }
+}
 include_once '../templates/templating.php';
-
 
 get_sentry();
 include_once './initialData.php';

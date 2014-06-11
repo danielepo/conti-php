@@ -13,28 +13,28 @@ var $error;
 protected $queryResult;
 
 //*** Function: DbConnector, Purpose: Connect to the database ***
-function DbConnector(){
+function __construct(){
 
-	// Load settings from parent class
-	$settings = SystemComponent::getSettings();
+}
+protected function connect(){
+  	$settings = SystemComponent::getSettings();
 
 	// Get the main settings from the array we just loaded
 	$host = $settings['dbhost'];
 	$db = $settings['dbname'];
 	$user = $settings['dbusername'];
 	$pass = $settings['dbpassword'];
-  
   $this->link = mysqli_init();
 	// Connect to the database
 	$this->link->real_connect($host, $user, $pass, $db, 3306);
+  register_shutdown_function(array(&$this, 'close'));
 	
-	register_shutdown_function(array(&$this, 'close'));
-
 }
 
 //*** Function: query, Purpose: Execute a database query ***
 public  function query($query) {
-	$this->theQuery = $query;
+   $this->connect();
+  $this->theQuery = $query;
 	$this->queryResult = $this->link->query($query);
 	$this->error=$this->link->error;
 	//echo $this->theQuery."<br>";
@@ -65,7 +65,7 @@ function hasData($result){
 //*** Function: fetchArray, Purpose: Get array of query results ***
 
 function fetchArray($result,$result_type = MYSQL_BOTH) {
-   if ($result)
+   if ($this->queryResult)
     {
       return $this->queryResult->fetch_array($result_type);
     }
@@ -80,7 +80,7 @@ function fetchRow($result) {
 }
 //*** Function: close, Purpose: Close the connection ***
 function close() {
-	if(is_a($this->link, "mysqli"))
+	if($this->link != null)
   $this->link->close();
 }
 

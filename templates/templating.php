@@ -38,4 +38,3 @@ function get_sentry($level=10){
 	if (!$theSentry->checkLogin($level) ){ header("Location: ../index.php"); die(); }
 	
 }
-?>

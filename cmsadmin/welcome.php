@@ -1,5 +1,19 @@
 <?php
-require_once('../includes/Sentry.php');
+function __autoload($class)
+{
+  $filename = $class . '.php';
+  $includeFolder = './includes/';
+  $templatesFolder = './templates/';
+  if (file_exists($includeFolder . $filename))
+  {
+    require_once $includeFolder . $filename;
+  }
+  if (file_exists($templatesFolder . $filename))
+  {
+    require_once $templatesFolder . $filename;
+  }
+}
+
 $theSentry = new Sentry();
 if (!$theSentry->checkLogin(10) ){ header("Location: login.php"); die(); }
 ?>

@@ -50,7 +50,7 @@ class sentry
 
     // Look up user in DB
 
-     $this->userManagement->CheckCypherPermission($user, $pass, $group);
+    $this->userManagement->CheckCypherPermission($user, $pass);
 
     $this->userdata = $this->userManagement->fetchArray(NULL, MYSQL_ASSOC);
 
@@ -62,9 +62,9 @@ class sentry
       $_SESSION["pass"] = $this->userdata['pass'];
       $_SESSION["thegroup"] = $this->userdata['thegroup'];
 
-      if ($goodRedirect)
+      if ($this->goodRedirect)
       {
-        header("Location: " . $goodRedirect . "?" . strip_tags(session_id()));
+        header("Location: " . $this->goodRedirect . "?" . strip_tags(session_id()));
       }
       return true;
     }
@@ -76,31 +76,22 @@ class sentry
     }
   }
 
+  private $goodRedirect;
+  private $badRedirect;
+
   function login($user = '', $pass = '', $group = 10, $goodRedirect = '', $badRedirect = '')
   {
-
+    $this->goodRedirect = $goodRedirect;
+    $this->badRedirect = $badRedirect;
     // If user is already logged in then check credentials
     if (isset($_SESSION['user']) && isset($_SESSION['pass']))
     {
-      $this->userManagement->CheckPermission($_SESSION['user'], $_SESSION['pass'], $group);
-
-      if ($this->userManagement->hasData(null))
-      {
-        // Existing user ok, continue
         if ($goodRedirect != '')
         {
           header("Location: " . $goodRedirect . "?" . strip_tags(session_id()));
         }
         return true;
-      }
-      else
-      {
-        // Existing user not ok, logout
-        $this->logout();
-        return false;
-      }
-
-      // User isn't logged in, check credentials
+  
     }
     else
     {

@@ -1,8 +1,8 @@
 <?php
-
+/*
 require_once 'DbConnector.php';
 require_once('Validator.php');
-
+*/
 class DbAccountManagement extends DbConnector
 {
 
@@ -10,6 +10,7 @@ class DbAccountManagement extends DbConnector
   private $validator;
 public function __construct()
 {
+  parent::__construct();
         $this->validator = new Validator();
 
 }
@@ -81,9 +82,9 @@ public function __construct()
   private function checkValue($var, $alternative){
   if ($var == '')
     {
-      $var = 'month(now())';
+      $var = "$alternative(now())";
     }
-    if ($var != 'month(now())' && !$this->validator->validateNumber($var))
+    if ($var != "$alternative(now())" && !$this->validator->validateNumber($var))
     {
       throw new Exception();
     }
