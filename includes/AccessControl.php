@@ -4,7 +4,7 @@
 // Class: sentry
 // Purpose: Control access to pages
 ///////////////////////////////////////////////////////////////////////////////////////
-class sentry
+class AccessControl
 {
 
   var $loggedin = false; //	Boolean to store whether the user is logged in
@@ -12,33 +12,33 @@ class sentry
   private $validate;
   private $userManagement;
 
-  function sentry()
+  function __construct()
   {
     session_start();
     header("Cache-control: private");
     $this->validate = new Validator();
-    $this->userManagement = new DbUserManagement();
+    
   }
 
   //======================================================================================
   // Log out, destroy session
   function logout()
   {
-    unset($this->userdata);
     session_destroy();
     return true;
   }
 
   //======================================================================================
   // Log in, and either redirect to goodRedirect or badRedirect depending on success
-  function checkLogin($group = 10)
+  function checkLogin()
   {
-    return $this->login('', '', $group, '', 'failed.php');
+    return isset($_SESSION["logged"]) && $_SESSION["logged"];
   }
 
-  function loginSimple($user = '', $pass = '', $group = 10)
+  function login($user = '', $pass = '')
   {
     // Validate input
+    $this->userManagement = new DbUserManagement();
     if (!$this->validate->validateTextOnly($user))
     {
       return false;
@@ -48,54 +48,22 @@ class sentry
       return false;
     }
 
-    // Look up user in DB
-
     $this->userManagement->CheckCypherPermission($user, $pass);
 
-    $this->userdata = $this->userManagement->fetchArray(NULL, MYSQL_ASSOC);
+    $this->userManagement->fetchArray(NULL, MYSQL_ASSOC);
 
     if ($this->userManagement->hasData(NULL))
     {
       // Login OK, store session details
       // Log in
-      $_SESSION["user"] = $user;
-      $_SESSION["pass"] = $this->userdata['pass'];
-      $_SESSION["thegroup"] = $this->userdata['thegroup'];
-
-      if ($this->goodRedirect)
-      {
-        header("Location: " . $this->goodRedirect . "?" . strip_tags(session_id()));
-      }
+      $_SESSION["logged"] = true;
       return true;
     }
     else
     {
       // Login BAD
-      unset($this->userdata);
+      $_SESSION["logged"] = false;
       return false;
-    }
-  }
-
-  private $goodRedirect;
-  private $badRedirect;
-
-  function login($user = '', $pass = '', $group = 10, $goodRedirect = '', $badRedirect = '')
-  {
-    $this->goodRedirect = $goodRedirect;
-    $this->badRedirect = $badRedirect;
-    // If user is already logged in then check credentials
-    if (isset($_SESSION['user']) && isset($_SESSION['pass']))
-    {
-        if ($goodRedirect != '')
-        {
-          header("Location: " . $goodRedirect . "?" . strip_tags(session_id()));
-        }
-        return true;
-  
-    }
-    else
-    {
-      return $this->loginSimple($user, $pass);
     }
   }
 
